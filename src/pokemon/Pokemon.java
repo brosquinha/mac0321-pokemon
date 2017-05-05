@@ -18,10 +18,10 @@ public class Pokemon {
 	final Type type;
 	final int maxHP;
 	final Attack[] attacks = {
-		attacks[0] = new Attack(20, 100);
-		attacks[1] = new Attack(30, 70);
-		attacks[2] = new Attack(80, 50);
-		attacks[3] = new Attack(100, 30);
+		new Attack(20, 100),
+		new Attack(30, 70),
+		new Attack(80, 50),
+		new Attack(100, 30),
 	};
 	int damageTaken;
 	Status status;
@@ -31,20 +31,28 @@ public class Pokemon {
 		this.type = type;
 		this.maxHP = maxHP;
 		this.status = Status.NORMAL;
+		this.damageTaken = 0;
 	}
 
 	// int hasWeakness(Pokemon attacker);
 
 	public void attack(int attack, Pokemon defender) {
-		defender.setHP(defender.getHP() - this.attacks[attack].damage);
+		defender.takeDamage(this.attacks[attack].damage);
 	}
 
+	public int getHP() {
+		return this.maxHP - this.damageTaken;
+	}
+	
+	public void takeDamage(int damage) {
+		this.damageTaken += damage;
+	}
 	private class Attack {
 		private int damage;
 		private int speed;
 
 		public Attack(int damage, int speed) {
-			this.damagae = damage;
+			this.damage = damage;
 			this.speed = speed;
 		}
 	}
