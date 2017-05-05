@@ -1,4 +1,5 @@
-package c07.controller;
+package pokemon;
+import events;
 
 public class Versus extends Controller {
 	private Pokemon[] pokemons1;
@@ -56,5 +57,8 @@ public class Versus extends Controller {
 		public String description() {
 			return "Fugindo de batalha";
 		}
+	}
+	public static void main (String[] args) {
+		trainer1 = new Trainer()
 	}
 }
