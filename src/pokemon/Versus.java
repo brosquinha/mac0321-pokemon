@@ -7,6 +7,9 @@ public class Versus extends Controller {
 	private Trainer trainer2;
 	
 	private class Attack extends Event {
+		final int damage;
+		final int speed;
+		
 		public Attack(long eventTime) {
 			super(eventTime);
 		}
@@ -31,4 +34,27 @@ public class Versus extends Controller {
 		}
 	}
 	
+	private class UseItem extends Event {
+		public UseItem(long eventTime) {
+			super(eventTime);
+		}
+		public void action() {
+			
+		}
+		public String description() {
+			return "Usando item de cura";
+		}
+	}
+	
+	private class Run extends Event {
+		public Run(long eventTime) {
+			super(eventTime);
+		}
+		public void action() {
+			
+		}
+		public String description() {
+			return "Fugindo de batalha";
+		}
+	}
 }
