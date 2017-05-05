@@ -59,6 +59,8 @@ public class Versus extends Controller {
 		}
 	}
 	public static void main (String[] args) {
-		trainer1 = new Trainer()
+		trainer1 = new Trainer();
+		trainer2 = new Trainer();
+		
 	}
 }
