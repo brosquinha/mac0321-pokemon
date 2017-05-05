@@ -1,4 +1,4 @@
-package c07.controller;
+package pokemon;
 
 public class Versus extends Controller {
 	private Pokemon[] pokemons1;

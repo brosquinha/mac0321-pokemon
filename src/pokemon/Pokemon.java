@@ -19,11 +19,13 @@ public class Pokemon {
 	final int maxHP;
 	//final Attack[] attacks;
 	int damageTaken;
+	Status status;
 	
 	public Pokemon(String name, Type type, int maxHP) {
 		this.name = name;
 		this.type = type;
 		this.maxHP = maxHP;
+		this.status = Status.NORMAL;
 	}
 	
 	// int hasWeakness(Pokemon attacker);
