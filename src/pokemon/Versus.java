@@ -2,17 +2,23 @@ package pokemon;
 import events;
 
 public class Versus extends Controller {
-	private Pokemon[] pokemons1;
-	private Pokemon[] pokemons2;
+	private Pokemon pokemons1;
+	private Pokemon pokemons2;
 	private Trainer trainer1;
 	private Trainer trainer2;
 	
 	private class Attack extends Event {
 		final int damage;
 		final int speed;
+		private Pokemon atacante;
+		private Pokemon alvo;
+		private int ataque;
 		
-		public Attack(long eventTime) {
+		public Attack(long eventTime, Pokemon atacante, int ataque, Pokemon alvo) {
 			super(eventTime);
+			this.atacante = atacante;
+			this.ataque = ataque;
+			this.alvo = alvo;
 		}
 		public void action() {
 			
@@ -23,12 +29,14 @@ public class Versus extends Controller {
 	}
 	
 	private class ChangePokemon extends Event {
-		public ChangePokemon(long eventTime) {
+		private Trainer treinador;
+		private int pokemonAtivo;
+		public ChangePokemon(long eventTime, Trainer treinador, int pokemonAtivo) {
 			super(eventTime);
+			this.treinador = treinador;
 		}
 		public void action() {
-			// TODO Auto-generated method stub
-			
+			treinador.setPokemonAtivo(pokemonAtivo);
 		}
 		public String description() {
 			return "Trocando pokemon";
@@ -36,11 +44,15 @@ public class Versus extends Controller {
 	}
 	
 	private class UseItem extends Event {
-		public UseItem(long eventTime) {
+		private Trainer treinador;
+		private int item;
+		public UseItem(long eventTime, Trainer treinador, int item) {
 			super(eventTime);
+			this.treinador = treinador;
+			this.item = item;
 		}
 		public void action() {
-			
+			treinador.useItem(item);
 		}
 		public String description() {
 			return "Usando item de cura";
@@ -48,11 +60,13 @@ public class Versus extends Controller {
 	}
 	
 	private class Run extends Event {
-		public Run(long eventTime) {
+		private Trainer treinador;
+		public Run(long eventTime, Trainer treinador) {
 			super(eventTime);
+			this.treinador = treinador;
 		}
 		public void action() {
-			
+			//TODO: fugir
 		}
 		public String description() {
 			return "Fugindo de batalha";
