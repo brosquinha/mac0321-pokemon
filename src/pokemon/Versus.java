@@ -23,13 +23,12 @@ public class Versus extends Controller {
 			this.defenderTrainer = (this.attackerTrainer == 0) ? 1 : 0;
 		}
 		public void action() {
-			System.out.println("Atacante "+this.attackerTrainer);
 			if (!attacker.isDead()) {
 				this.attacker.attack(this.attack, this.defender);
 				addEvent(this.attackerTrainer+1, new Batalhar(this.attackerTrainer+1));
 			}
 			else {
-				ChangePokemon p = new ChangePokemon(trainers[this.defenderTrainer]);
+				ChangePokemon p = new ChangePokemon(trainers[this.attackerTrainer]);
 				p.action();
 				System.out.println(p.description());
 			}
@@ -48,11 +47,22 @@ public class Versus extends Controller {
 		}
 		public void action() {
 			Pokemon p;
-			while ((p = treinador.pokemons[pokemonAtivo])== null || treinador.pokemons[pokemonAtivo].isDead()) {
+			System.out.println("Pokemon ativo: "+treinador.id);
+			while (pokemonAtivo < 3
+					&& ((p = treinador.pokemons[pokemonAtivo])== null 
+					|| treinador.pokemons[pokemonAtivo].isDead())) {
 				pokemonAtivo++;
 			}
-			treinador.setPokemonAtivo(pokemonAtivo);
-			addEvent(treinador.id, new Batalhar(treinador.id));
+			if (treinador.pokemons[pokemonAtivo] != null && !treinador.pokemons[pokemonAtivo].isDead())
+			{
+				treinador.setPokemonAtivo(pokemonAtivo);
+				addEvent(treinador.id, new Batalhar(treinador.id));
+			}
+			else
+			{
+				System.out.println("Acabo");
+				return;
+			}
 		}
 		public String description() {
 			return "Trocando pokemon";
@@ -103,17 +113,19 @@ public class Versus extends Controller {
 		}
 		public void action() {
 			double n = Math.random();
-			System.out.println("Jogador "+this.idTrainer);
-			if (n > 0)
+			double m;
+			//System.out.println("Jogador "+this.idTrainer);
+			if (n > 0.2)
 			{
+				m = (Math.random()*10)%4;
 				addEvent(this.idTrainer, new Attack(this.trainer1.pokemons[this.trainer1.pokemonAtivo], 
-						2, this.trainer2.pokemons[this.trainer2.pokemonAtivo], this.idTrainer));
+						(int)m, this.trainer2.pokemons[this.trainer2.pokemonAtivo], this.idTrainer));
 			}
-			else if (n > 0.3)
+			else if (n > 0.1)
 			{
 				addEvent(this.idTrainer, new UseItem(trainer1, 2));
 			}
-			else if (n > 0.1)
+			else if (n > 0.01)
 			{
 				addEvent(this.idTrainer, new ChangePokemon(trainer1));
 			}
