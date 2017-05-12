@@ -30,15 +30,19 @@ class EventSet {
 }
 
 public class Controller {
-	private EventSet es = new EventSet();
-	public void addEvent(Event c) { es.add(c); }
+	private EventSet es1 = new EventSet(), es2 = new EventSet();
+	public void addEvent(Event c) { es1.add(c); }
 	public void run() {
-		Event e;
-		while((e = es.getNext()) != null) {
-			if(e.ready()) {
-				e.action();
-				System.out.println(e.description());
-				es.removeCurrent();
+		Event e1, e2;
+		while(((e1 = es1.getNext()) != null) && ((e2 = es2.getNext()) != null) ) {
+			if(e1.getPrioridade() >= e2.getPrioridade()) {
+				e1.action();
+				System.out.println(e1.description());
+				es1.removeCurrent();
+				if (es1.getNext() == null) break; // a rodada pode terminar no meio do loop
+				e2.action();
+				System.out.println(e2.description());
+				es2.removeCurrent();
 			}
 		}
 	}

@@ -1,33 +1,29 @@
 package pokemon;
-import events;
+import events.*;
 
 public class Versus extends Controller {
 	private Pokemon pokemons1;
 	private Pokemon pokemons2;
-	private Trainer trainer1;
-	private Trainer trainer2;
 	
 	private class Attack extends Event {
-		final int damage;
-		final int speed;
-		private Pokemon atacante;
-		private Pokemon alvo;
-		private int ataque;
+		private Pokemon attacker;
+		private Pokemon defender;
+		private int attack;
 		
-		public Attack(long eventTime, Pokemon atacante, int ataque, Pokemon alvo) {
-			super(eventTime);
-			this.atacante = atacante;
-			this.ataque = ataque;
-			this.alvo = alvo;
+		public Attack(Pokemon atacante, int ataque, Pokemon alvo) {
+			super(1);
+			this.attacker = atacante;
+			this.attack = ataque;
+			this.defender = alvo;
 		}
 		public void action() {
-			
 		}
 		public String description() {
 			return "Pokemon ataca";
 		}
 	}
 	
+	/*
 	private class ChangePokemon extends Event {
 		private Trainer treinador;
 		private int pokemonAtivo;
@@ -72,9 +68,10 @@ public class Versus extends Controller {
 			return "Fugindo de batalha";
 		}
 	}
+	*/
 	public static void main (String[] args) {
-		trainer1 = new Trainer();
-		trainer2 = new Trainer();
+		Trainer trainer1 = new Trainer();
+		Trainer trainer2 = new Trainer();
 		
 	}
 }

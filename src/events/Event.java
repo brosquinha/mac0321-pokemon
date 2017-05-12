@@ -1,13 +1,16 @@
 package events;
 
 abstract public class Event {
-	private long evtTime;
-	public Event(long eventTime) {
-		evtTime = eventTime;
+	private int prioridade;
+	
+	public Event(int prioridade) {
+		this.prioridade = prioridade;
 	}
-	public boolean ready() {
-		return System.currentTimeMillis() >= evtTime;
+	
+	public int getPrioridade() {
+		return this.prioridade;
 	}
+	
 	abstract public void action();
 	abstract public String description();
 }
