@@ -44,6 +44,7 @@ public class Pokemon {
 	
 	public void takeDamage(int damage) {
 		this.damageTaken += damage;
+		System.out.println("Dano: "+this.damageTaken);
 	}
 	public boolean isDead() {
 		return (this.damageTaken >= this.maxHP);

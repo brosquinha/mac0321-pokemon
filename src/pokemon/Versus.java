@@ -23,13 +23,15 @@ public class Versus extends Controller {
 			this.defenderTrainer = (this.attackerTrainer == 0) ? 1 : 0;
 		}
 		public void action() {
+			System.out.println("Atacante "+this.attackerTrainer);
 			if (!attacker.isDead()) {
 				this.attacker.attack(this.attack, this.defender);
-				addEvent(this.attackerTrainer+1, new Batalhar(this.attackerTrainer + 1));
+				addEvent(this.attackerTrainer+1, new Batalhar(this.attackerTrainer+1));
 			}
 			else {
 				ChangePokemon p = new ChangePokemon(trainers[this.defenderTrainer]);
 				p.action();
+				System.out.println(p.description());
 			}
 		}
 		public String description() {
@@ -96,16 +98,16 @@ public class Versus extends Controller {
 		public Batalhar(int idTrainer) {
 			super(3);
 			this.idTrainer = idTrainer;
-			this.trainer1 = trainers[idTrainer-1];
-			this.trainer2 = (idTrainer == 1) ? trainers[1] : trainers[0];
+			this.trainer1 = trainers[this.idTrainer-1];
+			this.trainer2 = (this.idTrainer == 1) ? trainers[1] : trainers[0];
 		}
 		public void action() {
 			double n = Math.random();
-			System.out.println("Iniciando rodada");
-			if (n > 0.5)
+			System.out.println("Jogador "+this.idTrainer);
+			if (n > 0)
 			{
 				addEvent(this.idTrainer, new Attack(this.trainer1.pokemons[this.trainer1.pokemonAtivo], 
-						2, this.trainer2.pokemons[this.trainer2.pokemonAtivo], 1));
+						2, this.trainer2.pokemons[this.trainer2.pokemonAtivo], this.idTrainer));
 			}
 			else if (n > 0.3)
 			{
@@ -146,8 +148,14 @@ public class Versus extends Controller {
 			new Pokemon("Charizard", 300),
 			new Pokemon("Mewtwo", 300),
 		};
+		Pokemon[] pokemons2 = {
+				new Pokemon("Blastoise", 300),
+				new Pokemon("Pikachu", 300),
+				new Pokemon("Charizard", 300),
+				new Pokemon("Mewtwo", 300),
+			};
 		vs.trainers[0] = new Trainer(1, pokemons1);
-		vs.trainers[1] = new Trainer(2, pokemons1);
+		vs.trainers[1] = new Trainer(2, pokemons2);
 		vs.addEvent(1, vs.new Batalhar(1));
 		vs.addEvent(2, vs.new Batalhar(2));
 		vs.run();
