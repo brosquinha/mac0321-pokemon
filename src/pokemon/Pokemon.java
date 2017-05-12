@@ -15,7 +15,6 @@ public class Pokemon {
 	}
 
 	final String name;
-	final Type type;
 	final int maxHP;
 	final Attack[] attacks = {
 		new Attack(20, 100),
@@ -26,9 +25,8 @@ public class Pokemon {
 	int damageTaken;
 	Status status;
 
-	public Pokemon(String name, Type type, int maxHP) {
+	public Pokemon(String name, int maxHP) {
 		this.name = name;
-		this.type = type;
 		this.maxHP = maxHP;
 		this.status = Status.NORMAL;
 		this.damageTaken = 0;
@@ -47,13 +45,19 @@ public class Pokemon {
 	public void takeDamage(int damage) {
 		this.damageTaken += damage;
 	}
-	private class Attack {
+	public boolean isDead() {
+		return (this.damageTaken >= this.maxHP);
+	}
+	class Attack {
 		private int damage;
-		private int speed;
+		private int priority;
 
-		public Attack(int damage, int speed) {
+		public Attack(int damage, int priotity) {
 			this.damage = damage;
-			this.speed = speed;
+			this.priority = (priority > 100) ? 100 : ((priority < 0) ? 0 : priority);
+		}
+		public int getPriority() {
+			return this.priority;
 		}
 	}
 }
