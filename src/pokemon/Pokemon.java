@@ -38,19 +38,23 @@ public class Pokemon {
         defender.takeDamage(this.attacks[attack].damage);
     }
 
-    public int getHP() {
-        return this.maxHP - this.damageTaken;
-    }
-
     public void takeDamage(int damage) {
         this.damageTaken += damage;
-        System.out.println("Dano: " + this.damageTaken);
     }
 
     public boolean isDead() {
         return (this.damageTaken >= this.maxHP);
     }
 
+    public int getHP() {
+
+        if (this.maxHP - this.damageTaken < 0) return 0;
+        else return this.maxHP - this.damageTaken;
+    }
+
+    public String getName() {
+        return name;
+    }
     class Attack {
         private int damage;
         private int priority;
@@ -62,6 +66,10 @@ public class Pokemon {
 
         public int getPriority() {
             return this.priority;
+        }
+
+        public int getDamage() {
+            return damage;
         }
     }
 }

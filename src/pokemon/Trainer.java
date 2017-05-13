@@ -1,24 +1,27 @@
 package pokemon;
 
-import pokemon.Pokemon;
-
 public class Trainer {
+    String name;
     Pokemon[] pokemons;
-    int pokemonAtivo;
+    int activePokemon;
     int id;
 
-    public Trainer(int id, Pokemon[] pokemons) {
+    public Trainer(String name, int id, Pokemon[] pokemons) {
+        this.name = name;
         this.pokemons = pokemons;
         this.id = id;
-        this.pokemonAtivo = 0;
+        this.activePokemon = 0;
     }
 
-    void setPokemonAtivo(int pokemonAtivo) {
-        this.pokemonAtivo = pokemonAtivo;
+    void setActivePokemon(int activePokemon) {
+        this.activePokemon = activePokemon;
     }
 
-    void useItem(int item) {
-
+    public int getActivePokemon() {
+        return activePokemon;
     }
 
+    public String getName() {
+        return name;
+    }
 }

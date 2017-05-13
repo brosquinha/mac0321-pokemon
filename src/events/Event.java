@@ -1,17 +1,15 @@
 package events;
 
 abstract public class Event {
-    private int prioridade;
+    private int priority;
 
-    public Event(int prioridade) {
-        this.prioridade = prioridade;
+    public Event(int priority) {
+        this.priority = priority;
     }
 
-    public int getPrioridade() {
-        return this.prioridade;
+    public int getPriority() {
+        return this.priority;
     }
 
     abstract public void action();
-
-    abstract public String description();
 }
