@@ -50,6 +50,7 @@ public class Versus extends Controller {
 
         public void action() {
             Pokemon p;
+            //TODO: out of bounds exception nessa função
             System.out.println("Pokemon ativo: " + trainer.pokemons[trainer.activePokemon].getName());
             while (activePokemon++ + 1 < trainer.pokemons.length
                     && ((p = trainer.pokemons[activePokemon]) == null
