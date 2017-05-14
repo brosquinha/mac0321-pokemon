@@ -28,13 +28,14 @@ public class Map {
     }
 
     public void move(int trainerID) {
-        System.out.println("posição atual: " + positions[trainerID][0] + " " + positions[trainerID][1]);
-        for (int i=0; i<2; i++)
-			if (Math.random() > 0.5)
-				positions[trainerID][i] = (positions[trainerID][i] == 6) ? 6 : positions[trainerID][i]++;
-			else
-				positions[trainerID][i] = (positions[trainerID][i] == 0) ? 0 : positions[trainerID][i]--;
-        System.out.println("posição nova: " + positions[trainerID][0] + " " + positions[trainerID][1]);
+        System.out.println(trainerID + " posição atual: " + positions[trainerID][0] + " " + positions[trainerID][1]);
+        int i;
+        if (Math.random() > 0.5) i = 0; else i = 1;
+        if (Math.random() > 0.5)
+            positions[trainerID][i] = (positions[trainerID][i] == 6) ? 6 : positions[trainerID][i]+1;
+        else
+            positions[trainerID][i] = (positions[trainerID][i] == 0) ? 0 : positions[trainerID][i]-1;
+        System.out.println(trainerID + " posição nova: " + positions[trainerID][0] + " " + positions[trainerID][1]);
 
     }
 }

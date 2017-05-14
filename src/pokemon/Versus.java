@@ -3,7 +3,11 @@ package pokemon;
 import events.*;
 
 public class Versus extends Controller {
-    private Trainer[] trainers = new Trainer[2];
+    private Trainer[] trainers;
+
+    public Versus(Trainer[] trainers) {
+        this.trainers = trainers;
+    }
 
     private class Attack extends Event {
         private Pokemon attacker;
@@ -137,7 +141,7 @@ public class Versus extends Controller {
     }
 
     public static void main(String[] args) {
-        Versus vs = new Versus();
+        Versus vs = new Versus(new Trainer[2]);
         vs.trainers[0] = new Trainer("Anorak", 0,
                 new Pokemon[] {
                     new Pokemon(Pokemon.pokedex.get("Blastoise")),

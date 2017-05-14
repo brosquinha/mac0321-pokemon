@@ -21,10 +21,10 @@ public class MapController extends Controller {
             if (map.isOnGrass(trainer)) {
                 double r = Math.random();
                 if (r > 0.8) {
-                    Versus vs = new Versus();
                     Trainer wild = new Trainer("wild", (trainer.id == 0) ? 1 : 0, new Pokemon[]{
                             new Pokemon(Pokemon.pokedex.get("Pikachu"))
                     });
+                    Versus vs = new Versus(new Trainer[]{trainer, wild});
                     vs.addEvent(trainer.id, vs.new Batalhar(trainer.id));
                     vs.addEvent(wild.id, vs.new Batalhar(wild.id));
                     vs.run();
