@@ -12,7 +12,7 @@ public class Map {
             { true, true, false, false, false, true, true }
     };
 
-    private int positions[][]; //positions[trainer] = { x, y }
+    private int positions[][] = new int[2][2]; //positions[trainer] = { x, y }
 
     public Map(Trainer[] trainers) {
         for (Trainer trainer : trainers) {
@@ -23,19 +23,18 @@ public class Map {
         }
     }
 
-    public boolean isGrass(int x, int y) {
-        return this.map[x][y];
+    public boolean isOnGrass(Trainer trainer) {
+        return this.map[positions[trainer.id][0]][positions[trainer.id][1]];
     }
 
     public void move(int trainerID) {
+        System.out.println("posição atual: " + positions[trainerID][0] + " " + positions[trainerID][1]);
         for (int i=0; i<2; i++)
 			if (Math.random() > 0.5)
 				positions[trainerID][i] = (positions[trainerID][i] == 6) ? 6 : positions[trainerID][i]++;
 			else
 				positions[trainerID][i] = (positions[trainerID][i] == 0) ? 0 : positions[trainerID][i]--;
-    }
-
-    public static void main (String[] args) {
+        System.out.println("posição nova: " + positions[trainerID][0] + " " + positions[trainerID][1]);
 
     }
 }

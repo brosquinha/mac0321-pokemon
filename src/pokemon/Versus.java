@@ -97,7 +97,7 @@ public class Versus extends Controller {
         }
     }
 
-    private class Batalhar extends Event {
+    class Batalhar extends Event {
         private Trainer trainer1;
         private Trainer trainer2;
         private int trainerID;
