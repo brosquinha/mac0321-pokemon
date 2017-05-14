@@ -113,7 +113,7 @@ public class Versus extends Controller {
             double n = Math.random();
             double m;
             if (n > 0.2) {
-                m = (Math.random() * 10) % 4;
+                m = (Math.random() * 10) % trainer1.pokemons[trainer1.getActivePokemon()].attacks.length;
                 addEvent(this.trainerID, new Attack(this.trainer1.pokemons[this.trainer1.activePokemon],
                         (int) m, this.trainer2.pokemons[this.trainer2.activePokemon], this.trainerID));
             } else if (n > 0.1) {
@@ -140,16 +140,12 @@ public class Versus extends Controller {
         Versus vs = new Versus();
         vs.trainers[0] = new Trainer("Anorak", 0,
                 new Pokemon[] {
-                    new Pokemon("Blastoise", 300),
-                    new Pokemon("Pikachu", 150),
-                    new Pokemon("Diglett", 200)
+                    new Pokemon(Pokemon.pokedex.get("Blastoise")),
                 }
         );
         vs.trainers[1] = new Trainer("Brosquinha",1,
                 new Pokemon[] {
-                    new Pokemon("Charizard", 250),
-                    new Pokemon("Totodile", 180),
-                    new Pokemon("Chikorita", 200)
+                    new Pokemon(Pokemon.pokedex.get("Charizard")),
                 }
         );
         vs.addEvent(0, vs.new Batalhar(0));

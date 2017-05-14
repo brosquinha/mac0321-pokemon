@@ -1,6 +1,46 @@
 package pokemon;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Pokemon {
+
+    static final Map<String, Pokemon> pokedex = new HashMap<String, Pokemon>();
+
+    static {
+        pokedex.put("Blastoise", new Pokemon("Blastoise", 300,
+                new Attack[]{
+                        new Attack("Hydro Pump", 100, 30),
+                        new Attack("Water Gun", 60, 70),
+                        new Attack("Slash",40, 80)
+                }
+        ));
+
+        pokedex.put("Charizard", new Pokemon("Charizard", 250,
+                new Attack[]{
+                        new Attack("Fire Blast",120, 25),
+                        new Attack("Slash",40, 80)
+                }
+        ));
+        pokedex.put("Pikachu", new Pokemon("Pikachu", 180,
+                new Attack[]{
+                        new Attack("Thundershock",90, 60),
+                        new Attack("Quick Attack",45, 100)
+                }
+        ));
+        pokedex.put("Gyarados", new Pokemon("Gyarados", 200,
+                new Attack[]{
+                        new Attack("Draco Meteor",150, 10),
+                        new Attack("Body Slam", 90, 50)
+                }
+        ));
+        pokedex.put("Mewtwo", new Pokemon("Gyarados", 200,
+                new Attack[]{
+                        new Attack("Draco Meteor",150, 10),
+                        new Attack("Body Slam", 90, 50)
+                }
+        ));
+    }
     enum Type { // define os tipos possíveis para os pokémons
         NORMAL, FIRE, FIGHTING,
         WATER, FLYING, GRASS,
@@ -10,26 +50,20 @@ public class Pokemon {
         DARK, STEEL, FAIRY;
     }
 
-    enum Status {
-        NORMAL, FAINTED;
+    private final String name;
+    private final int maxHP;
+    final Attack[] attacks;
+    private int damageTaken;
+
+    public Pokemon(Pokemon pokemon) {
+        this(pokemon.name, pokemon.maxHP, pokemon.attacks);
     }
 
-    final String name;
-    final int maxHP;
-    final Attack[] attacks = {
-            new Attack(20, 100),
-            new Attack(30, 70),
-            new Attack(80, 50),
-            new Attack(100, 30),
-    };
-    int damageTaken;
-    Status status;
-
-    public Pokemon(String name, int maxHP) {
+    public Pokemon(String name, int maxHP, Attack[] attacks) {
         this.name = name;
         this.maxHP = maxHP;
-        this.status = Status.NORMAL;
         this.damageTaken = 0;
+        this.attacks = attacks;
     }
 
     public void attack(int attack, Pokemon defender) {
@@ -58,13 +92,19 @@ public class Pokemon {
     public String getName() {
         return name;
     }
-    class Attack {
-        private int damage;
-        private int priority;
+    static class Attack {
+        private final String name;
+        private final int damage;
+        private final int priority;
 
-        public Attack(int damage, int priotity) {
+        public Attack(String name, int damage, int priority) {
+            this.name = name;
             this.damage = damage;
             this.priority = (priority > 100) ? 100 : ((priority < 0) ? 0 : priority);
+        }
+
+        public String getName() {
+            return this.name;
         }
 
         public int getPriority() {
