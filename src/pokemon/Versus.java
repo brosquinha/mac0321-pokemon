@@ -49,34 +49,37 @@ public class Versus extends Controller {
         }
 
         public void action() {
-            Pokemon p;
-            //TODO: out of bounds exception nessa função
             System.out.println("Pokemon ativo: " + trainer.pokemons[trainer.activePokemon].getName());
-            while (activePokemon++ + 1 < trainer.pokemons.length
-                    && ((p = trainer.pokemons[activePokemon]) == null
-                    || trainer.pokemons[activePokemon].isDead()));
-            if (trainer.pokemons[activePokemon] != null && !trainer.pokemons[activePokemon].isDead()) {
-                trainer.setActivePokemon(activePokemon);
-                System.out.println("O pokémon ativo agora é " + trainer.pokemons[trainer.getActivePokemon()].getName());
-                addEvent(trainer.id, new Batalhar(trainer.id));
-            } else {
+            int i;
+            for (i = activePokemon; i < trainer.pokemons.length; i++) {
+                if (!trainer.pokemons[i].isDead()) {
+                    trainer.setActivePokemon(i);
+                    System.out.println("O pokémon ativo agora é " + trainer.pokemons[trainer.getActivePokemon()].getName());
+                    addEvent(trainer.id, new Batalhar(trainer.id));
+                    break;
+                }
+            }
+            if (i >= trainer.pokemons.length) {
                 System.out.println("O treinador " + trainer.getName() + " não possui mais pokémons!");
+                System.out.println("GGWP");
             }
         }
     }
 
     private class UseItem extends Event {
         private Trainer trainer;
-        private int item;
+        private int heal;
 
         public UseItem(Trainer trainer, int item) {
             super(200);
             this.trainer = trainer;
-            this.item = item;
+            this.heal = 50 + (int)(Math.random()*51); //minimo de heal = 50, maximo 100
         }
 
         public void action() {
-            System.out.println("O treinador " + trainer.getName() + " usou um item!");
+            trainer.pokemons[trainer.activePokemon].healDamage(this.heal);
+            System.out.println("O treinador " + trainer.getName() + " usou um item e curou " + this.heal + " de dano!");
+            System.out.println(trainer.pokemons[trainer.getActivePokemon()].getName() + " está com " + this.trainer.pokemons[trainer.getActivePokemon()].getHP() + " de vida!");
             addEvent(trainer.id, new Batalhar(trainer.id));
         }
     }
@@ -90,7 +93,7 @@ public class Versus extends Controller {
         }
 
         public void action() {
-            System.out.println("O trainer" + "fugiu!");
+            System.out.println("O treinador " + trainer.getName() + " fugiu!");
         }
     }
 
@@ -115,7 +118,17 @@ public class Versus extends Controller {
                         (int) m, this.trainer2.pokemons[this.trainer2.activePokemon], this.trainerID));
             } else if (n > 0.1) {
                 addEvent(this.trainerID, new UseItem(trainer1, 2));
-            } else if (n > 0.01) {
+            } else if (n > 0.001) {
+                int pokemonsRestantes = 0;
+                for (int i = 0; i < trainer1.pokemons.length; i++) {
+                    if (!trainer1.pokemons[i].isDead()) {
+                        pokemonsRestantes++;
+                    }
+                    if (pokemonsRestantes == 1) {
+                        this.action();
+                        return;
+                    }
+                }
                 addEvent(this.trainerID, new ChangePokemon(trainer1));
             } else {
                 addEvent(this.trainerID, new Run(trainer1));
@@ -126,10 +139,14 @@ public class Versus extends Controller {
     public static void main(String[] args) {
         Versus vs = new Versus();
         Pokemon[] pokemons1 = {
-                new Pokemon("Blastoise", 300)
+                new Pokemon("Blastoise", 300),
+                new Pokemon("Pikachu", 150),
+                new Pokemon("Diglett", 200)
         };
         Pokemon[] pokemons2 = {
-                new Pokemon("Charizard", 300)
+                new Pokemon("Charizard", 250),
+                new Pokemon("Totodile", 180),
+                new Pokemon("Chikorita", 200)
         };
         vs.trainers[0] = new Trainer("Anorak", 0, pokemons1);
         vs.trainers[1] = new Trainer("Brosquinha",1, pokemons2);

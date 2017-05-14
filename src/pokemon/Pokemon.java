@@ -32,14 +32,17 @@ public class Pokemon {
         this.damageTaken = 0;
     }
 
-    // int hasWeakness(Pokemon attacker);
-
     public void attack(int attack, Pokemon defender) {
         defender.takeDamage(this.attacks[attack].damage);
     }
 
     public void takeDamage(int damage) {
         this.damageTaken += damage;
+    }
+
+    public void healDamage(int heal) {
+        this.damageTaken -= heal;
+        if (this.damageTaken < 0) this.damageTaken = 0;
     }
 
     public boolean isDead() {
