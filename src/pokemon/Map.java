@@ -16,8 +16,8 @@ public class Map {
 
     public Map(Trainer[] trainers) {
         for (Trainer trainer : trainers) {
-            int x = (int)(Math.random()*8);
-            int y = (int)(Math.random()*8);
+            int x = (int)(Math.random()*7);
+            int y = (int)(Math.random()*7);
             positions[trainer.id][0] = x;
             positions[trainer.id][1] = y;
         }
