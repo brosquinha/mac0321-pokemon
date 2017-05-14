@@ -138,18 +138,20 @@ public class Versus extends Controller {
 
     public static void main(String[] args) {
         Versus vs = new Versus();
-        Pokemon[] pokemons1 = {
-                new Pokemon("Blastoise", 300),
-                new Pokemon("Pikachu", 150),
-                new Pokemon("Diglett", 200)
-        };
-        Pokemon[] pokemons2 = {
-                new Pokemon("Charizard", 250),
-                new Pokemon("Totodile", 180),
-                new Pokemon("Chikorita", 200)
-        };
-        vs.trainers[0] = new Trainer("Anorak", 0, pokemons1);
-        vs.trainers[1] = new Trainer("Brosquinha",1, pokemons2);
+        vs.trainers[0] = new Trainer("Anorak", 0,
+                new Pokemon[] {
+                    new Pokemon("Blastoise", 300),
+                    new Pokemon("Pikachu", 150),
+                    new Pokemon("Diglett", 200)
+                }
+        );
+        vs.trainers[1] = new Trainer("Brosquinha",1,
+                new Pokemon[] {
+                    new Pokemon("Charizard", 250),
+                    new Pokemon("Totodile", 180),
+                    new Pokemon("Chikorita", 200)
+                }
+        );
         vs.addEvent(0, vs.new Batalhar(0));
         vs.addEvent(1, vs.new Batalhar(1));
         vs.run();
