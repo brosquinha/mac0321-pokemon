@@ -1,33 +1,38 @@
 package pokemon;
-import com.sun.jdi.event.*;
 import events.*;
 import events.Event;
 
 public class MapController extends Controller {
-
     private Trainer[] trainers = new Trainer[2];
+
     public class Move extends Event {
         Map map;
         Trainer trainer;
         public Move(Map map, Trainer trainer) {
-            super(1000);
+            super(0);
             this.map = map;
             this.trainer = trainer;
         }
 
         @Override
         public void action() {
-            map.move(trainer.id);
+            map.move(trainer);
             if (map.isOnGrass(trainer)) {
                 double r = Math.random();
                 if (r > 0.8) {
                     Trainer wild = new Trainer("wild", (trainer.id == 0) ? 1 : 0, new Pokemon[]{
-                            new Pokemon(Pokemon.pokedex.get("Pikachu"))
+                            new Pokemon(Pokemon.getRandomPokemon())
                     });
                     Versus vs = new Versus(new Trainer[]{trainer, wild});
-                    vs.addEvent(trainer.id, vs.new Batalhar(trainer.id));
-                    vs.addEvent(wild.id, vs.new Batalhar(wild.id));
+                    vs.addEvent(trainer.id, vs.new Battle(trainer.id));
+                    vs.addEvent(wild.id, vs.new Battle(wild.id));
+                    System.out.println("O treinador " + trainer.getName() + " encontrou o pokémon " + wild.pokemons[wild.getActivePokemon()].getName());
                     vs.run();
+                    if (trainer.remainingPokemon() == 0) {
+                        System.out.println("O treinador " + trainer.getName() + " não possui mais pokémons!");
+                        System.out.println("Fim da partida!");
+                        return;
+                    }
                     addEvent(trainer.id, new Move(this.map, this.trainer));
                 } else {
                     addEvent(trainer.id, new Move(this.map, this.trainer));

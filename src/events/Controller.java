@@ -1,9 +1,12 @@
 package events;
 
 class EventSet {
-    private Event[] events = new Event[100];
+    private Event[] events;
     private int index = 0;
     private int next = 0;
+    public EventSet() {
+        events = new Event[100];
+    }
 
     public void add(Event e) {
         if (index >= events.length)
@@ -42,15 +45,19 @@ public class Controller {
         Event e1, e2;
         while (((e1 = es1.getNext()) != null) && ((e2 = es2.getNext()) != null)) {
             if (e1.getPriority() >= e2.getPriority()) {
+                //System.out.println("es1: " + es1);
                 e1.action();
                 es1.removeCurrent();
                 if (es1.getNext() == null) break; // a rodada pode terminar no meio do loop
+                //System.out.println("es2: " + es2);
                 e2.action();
                 es2.removeCurrent();
             } else {
+                //System.out.println("es2: " + es2);
                 e2.action();
                 es2.removeCurrent();
                 if (es2.getNext() == null) break;
+                //System.out.println("es1: " + es1);
                 e1.action();
                 es1.removeCurrent();
             }

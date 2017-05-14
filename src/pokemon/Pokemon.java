@@ -2,6 +2,7 @@ package pokemon;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class Pokemon {
 
@@ -87,6 +88,12 @@ public class Pokemon {
 
         if (this.maxHP - this.damageTaken < 0) return 0;
         else return this.maxHP - this.damageTaken;
+    }
+
+    static Pokemon getRandomPokemon() {
+        Random generator = new Random();
+        Object[] values = pokedex.values().toArray();
+        return (Pokemon)values[generator.nextInt(values.length)];
     }
 
     public String getName() {

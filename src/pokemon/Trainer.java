@@ -21,6 +21,14 @@ public class Trainer {
         return activePokemon;
     }
 
+    public int remainingPokemon() {
+        int count = 0;
+        for (Pokemon pokemon : this.pokemons) {
+            if (pokemon.getHP() > 0) count++;
+        }
+        return count;
+    }
+
     public String getName() {
         return name;
     }

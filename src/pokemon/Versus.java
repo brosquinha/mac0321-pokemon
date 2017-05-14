@@ -16,16 +16,13 @@ public class Versus extends Controller {
         private int defenderTrainer;
         private int attack;
 
-        public Attack(Pokemon atacante, int ataque, Pokemon alvo, int idTrainer) {
+        public Attack(Pokemon atacante, int ataque, Pokemon alvo, int trainerID) {
             super(atacante.attacks[ataque].getPriority());
             this.attacker = atacante;
             this.attack = ataque;
             this.defender = alvo;
-            if (trainers[0].id == idTrainer)
-                this.attackerTrainer = 0;
-            else
-                this.attackerTrainer = 1;
-            this.defenderTrainer = (this.attackerTrainer == 0) ? 1 : 0;
+            this.attackerTrainer = (trainerID == trainers[0].id) ? trainers[0].id : trainers[1].id;
+            this.defenderTrainer = (trainerID == trainers[0].id) ? trainers[1].id : trainers[0].id;
         }
 
         public void action() {
@@ -34,7 +31,7 @@ public class Versus extends Controller {
                 System.out.println("O pokémon " + this.attacker.getName() + " atacou " + this.defender.getName() +
                         " e causou " + this.attacker.attacks[this.attack].getDamage() + " de dano!");
                 System.out.println("Vida restante de " + this.defender.getName() + ": " + this.defender.getHP());
-                addEvent(this.attackerTrainer, new Batalhar(this.attackerTrainer));
+                addEvent(this.attackerTrainer, new Battle(this.attackerTrainer));
             } else {
                 ChangePokemon p = new ChangePokemon(trainers[this.attackerTrainer]);
                 p.action();
@@ -53,19 +50,17 @@ public class Versus extends Controller {
         }
 
         public void action() {
-            System.out.println("Pokemon ativo: " + trainer.pokemons[trainer.activePokemon].getName());
             int i;
             for (i = activePokemon; i < trainer.pokemons.length; i++) {
                 if (!trainer.pokemons[i].isDead()) {
                     trainer.setActivePokemon(i);
                     System.out.println("O pokémon ativo agora é " + trainer.pokemons[trainer.getActivePokemon()].getName());
-                    addEvent(trainer.id, new Batalhar(trainer.id));
+                    addEvent(trainer.id, new Battle(trainer.id));
                     break;
                 }
             }
             if (i >= trainer.pokemons.length) {
-                System.out.println("O treinador " + trainer.getName() + " não possui mais pokémons!");
-                System.out.println("GGWP");
+                System.out.println(trainer.getName() == "wild" ? "O pokémon selvagem morreu!" : ("O treinador " + trainer.getName() + " não tem mais pokémons!"));
             }
         }
     }
@@ -84,7 +79,7 @@ public class Versus extends Controller {
             trainer.pokemons[trainer.activePokemon].healDamage(this.heal);
             System.out.println("O treinador " + trainer.getName() + " usou um item e curou " + this.heal + " de dano!");
             System.out.println(trainer.pokemons[trainer.getActivePokemon()].getName() + " está com " + this.trainer.pokemons[trainer.getActivePokemon()].getHP() + " de vida!");
-            addEvent(trainer.id, new Batalhar(trainer.id));
+            addEvent(trainer.id, new Battle(trainer.id));
         }
     }
 
@@ -101,16 +96,16 @@ public class Versus extends Controller {
         }
     }
 
-    class Batalhar extends Event {
+    class Battle extends Event {
         private Trainer trainer1;
         private Trainer trainer2;
         private int trainerID;
 
-        public Batalhar(int trainerID) {
-            super(3);
+        public Battle(int trainerID) {
+            super(0);
             this.trainerID = trainerID;
-            this.trainer1 = trainers[this.trainerID];
-            this.trainer2 = (this.trainerID == 0) ? trainers[1] : trainers[0];
+            this.trainer1 = (trainers[0].id == trainerID) ? trainers[0] : trainers[1];
+            this.trainer2 = (trainers[0].id == trainerID) ? trainers[1] : trainers[0];
         }
 
         public void action() {
@@ -120,9 +115,9 @@ public class Versus extends Controller {
                 m = (Math.random() * 10) % trainer1.pokemons[trainer1.getActivePokemon()].attacks.length;
                 addEvent(this.trainerID, new Attack(this.trainer1.pokemons[this.trainer1.activePokemon],
                         (int) m, this.trainer2.pokemons[this.trainer2.activePokemon], this.trainerID));
-            } else if (n > 0.1) {
+            } else if (n > 0.1 && trainer1.getName() != "wild") {
                 addEvent(this.trainerID, new UseItem(trainer1, 2));
-            } else if (n > 0.001) {
+            } else if (n > 0.01 && trainer1.getName() != "wild") {
                 int pokemonsRestantes = 0;
                 for (int i = 0; i < trainer1.pokemons.length; i++) {
                     if (!trainer1.pokemons[i].isDead()) {
@@ -152,8 +147,8 @@ public class Versus extends Controller {
                     new Pokemon(Pokemon.pokedex.get("Charizard")),
                 }
         );
-        vs.addEvent(0, vs.new Batalhar(0));
-        vs.addEvent(1, vs.new Batalhar(1));
+        vs.addEvent(0, vs.new Battle(0));
+        vs.addEvent(1, vs.new Battle(1));
         vs.run();
     }
 }
