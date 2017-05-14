@@ -19,7 +19,7 @@ public class MapController extends Controller {
             map.move(trainer);
             if (map.isOnGrass(trainer)) {
                 double r = Math.random();
-                if (r > 0.8) {
+                if ((r > 0.8 && trainer.getName() != "wild") || (r > 0.95 && trainer.getName() == "wild")) {
                     Trainer wild = new Trainer("wild", (trainer.id == 0) ? 1 : 0, new Pokemon[]{
                             new Pokemon(Pokemon.getRandomPokemon())
                     });
@@ -33,6 +33,7 @@ public class MapController extends Controller {
                         System.out.println("Fim da partida!");
                         return;
                     }
+                    System.out.println();
                     addEvent(trainer.id, new Move(this.map, this.trainer));
                 } else {
                     addEvent(trainer.id, new Move(this.map, this.trainer));
@@ -48,11 +49,15 @@ public class MapController extends Controller {
         mpc.trainers[0] = new Trainer("Anorak", 0,
                 new Pokemon[] {
                         new Pokemon(Pokemon.pokedex.get("Blastoise")),
+                        new Pokemon(Pokemon.pokedex.get("Gardevoir")),
+                        new Pokemon(Pokemon.pokedex.get("Pidgey"))
                 }
         );
         mpc.trainers[1] = new Trainer("Brosquinha",1,
                 new Pokemon[] {
                         new Pokemon(Pokemon.pokedex.get("Charizard")),
+                        new Pokemon(Pokemon.pokedex.get("Mewtwo")),
+                        new Pokemon(Pokemon.pokedex.get("Pikachu"))
                 }
         );
         Map map = new Map(mpc.trainers);

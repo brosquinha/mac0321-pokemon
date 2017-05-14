@@ -28,7 +28,7 @@ public class Versus extends Controller {
         public void action() {
             if (!attacker.isDead()) {
                 this.attacker.attack(this.attack, this.defender);
-                System.out.println("O pokémon " + this.attacker.getName() + " atacou " + this.defender.getName() +
+                System.out.println("O pokémon " + this.attacker.getName() + " usou o ataque " +this.attacker.attacks[this.attack].getName() + " em "+ this.defender.getName() +
                         " e causou " + this.attacker.attacks[this.attack].getDamage() + " de dano!");
                 System.out.println("Vida restante de " + this.defender.getName() + ": " + this.defender.getHP());
                 addEvent(this.attackerTrainer, new Battle(this.attackerTrainer));
@@ -92,7 +92,7 @@ public class Versus extends Controller {
         }
 
         public void action() {
-            System.out.println("O treinador " + trainer.getName() + " fugiu!");
+            System.out.println(trainer.getName() == "wild" ? "O " + this.trainer.pokemons[this.trainer.getActivePokemon()].getName() + " selvagem fugiu!" : ("O treinador " + trainer.getName() + " fugiu!"));
         }
     }
 

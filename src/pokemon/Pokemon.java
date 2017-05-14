@@ -29,26 +29,41 @@ public class Pokemon {
                         new Attack("Quick Attack",45, 100)
                 }
         ));
-        pokedex.put("Gyarados", new Pokemon("Gyarados", 200,
+        pokedex.put("Gyarados", new Pokemon("Gyarados", 150,
                 new Attack[]{
                         new Attack("Draco Meteor",150, 10),
                         new Attack("Body Slam", 90, 50)
                 }
         ));
-        pokedex.put("Mewtwo", new Pokemon("Gyarados", 200,
+        pokedex.put("Mewtwo", new Pokemon("Mewtwo", 250,
                 new Attack[]{
-                        new Attack("Draco Meteor",150, 10),
-                        new Attack("Body Slam", 90, 50)
+                        new Attack("Psychic",130, 10),
+                        new Attack("Confusion", 60, 50)
                 }
         ));
-    }
-    enum Type { // define os tipos possíveis para os pokémons
-        NORMAL, FIRE, FIGHTING,
-        WATER, FLYING, GRASS,
-        POISON, ELECTRIC, GROUND,
-        PSYCHIC, ROCK, ICE,
-        BUG, DRAGON, GHOST,
-        DARK, STEEL, FAIRY;
+        pokedex.put("Pidgey", new Pokemon("Pidgey", 140,
+                new Attack[]{
+                        new Attack("Gust", 70, 70)
+                }
+        ));
+        pokedex.put("Butterfree", new Pokemon("Butterfree", 120,
+                new Attack[]{
+                        new Attack("Poison Powder", 120, 100),
+                        new Attack("Wing Attack", 90, 80)
+                }
+        ));
+        pokedex.put("Gardevoir", new Pokemon("Gardevoir", 220,
+                new Attack[]{
+                        new Attack("Psybeam", 90, 70),
+                        new Attack("Moonblast", 310, 50),
+                        new Attack("Psychic",130, 10)
+                }
+        ));
+        pokedex.put("Magikarp", new Pokemon("Magikarp", 50,
+                new Attack[]{
+                        new Attack("Poison Powder", 0, 100)
+                }
+        ));
     }
 
     private final String name;
