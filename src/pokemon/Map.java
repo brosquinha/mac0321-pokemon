@@ -28,7 +28,11 @@ public class Map {
     }
 
     public void move(int trainerID) {
-
+        for (int i=0; i<2; i++)
+			if (Math.random() > 0.5)
+				positions[trainerID][i] = (positions[trainerID][i] == 6) ? 6 : positions[trainerID][i]++;
+			else
+				positions[trainerID][i] = (positions[trainerID][i] == 0) ? 0 : positions[trainerID][i]--;
     }
 
     public static void main (String[] args) {
